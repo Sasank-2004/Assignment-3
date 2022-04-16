@@ -1,18 +1,18 @@
 import numpy as np
-a =0
-b =0
-o =0
-ab =0
-data = ['A','B','O','O','AB','O','A','O','B','A','O','B','A','O','O','A','AB','O','A','A','O','O','AB','B','A','O','B','A','B','O']
-for i in data :
-    if(i=='O'): o +=1
-    if(i=='A'): a +=1
-    if(i=='B'): b +=1
-    if(i=='AB'): ab +=1 
-print(f'Frequency of Blood Group O  : {o} ')
-print(f'Frequency of Blood Group A  : {a} ')
-print(f'Frequency of Blood Group B  : {b} ')
-print(f'Frequency of Blood Group AB : {ab}')
-table = {o:'O', a:'A', b:'B', ab:'AB'}
-print(f'Most common Blood Group : {table[max(o,a,b,ab)]}')
-print(f'Rarest Blod group : {table[min(o,a,b,ab)]} ')
+import pandas as pd
+read = pd.read_excel("input.xlsx","Sheet1")
+data = np.array(read)
+values = list(data[0])
+o = values.count('O')
+a = values.count('A')
+b = values.count('B')
+ab = values.count('AB')
+blood_groups = ['O','A','B','AB']
+frequencies = [o,a,b,ab]
+maximum = max(o,a,b,ab)
+minimum =  min(o,a,b,ab)
+dictionary = {o:'O',a:'A',b:'B',ab:'AB'}
+print(f'The Most common Blood group : {dictionary[maximum]}')
+print(f'The rarest Blood group      : {dictionary[minimum]}')
+write = pd.DataFrame({"Blood Groups":blood_groups,"Frequency":frequencies})
+write.to_excel("output.xlsx",index=False)
